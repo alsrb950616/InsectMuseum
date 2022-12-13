@@ -13,6 +13,13 @@ public class GameCountScript : MonoBehaviour
     private void OnEnable()
     {
         _isRun = true;
+
+        InsectFoodScript[] food = GameObject.FindObjectsOfType<InsectFoodScript>();
+
+        foreach(var obj in food)
+        {
+            Destroy(obj.gameObject);
+        }
     }
 
     void Update()

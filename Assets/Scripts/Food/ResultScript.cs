@@ -23,5 +23,12 @@ public class ResultScript : MonoBehaviour
         {
             _failed.SetActive(true);
         }
+
+        InsectFoodScript[] objs = GameObject.FindObjectsOfType<InsectFoodScript>();
+
+        foreach(var obj in objs)
+        {
+            Destroy(obj.gameObject);
+        }
     }
 }

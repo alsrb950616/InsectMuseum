@@ -100,13 +100,38 @@ public class FoobMainCanvasScript : MonoBehaviour
         return value;
     }
 
-    public void TestFunction(bool isValue)
+    public void CheckFoodAnswer(int value)
     {
-        if(isValue)
+        if(value == 1)
         {
-            _answerCount++;
+            if(_curInsect == InsectType.BUTTERFLY || _curInsect == InsectType.HONEYBEE)
+            {
+                _answerCount++;
+            }
         }
-       
+        else if(value == 2)
+        {
+            if(_curInsect == InsectType.STAGBEETLE)
+            {
+                _answerCount++;
+            }
+        }
+        else if(value == 3)
+        {
+            if(_curInsect == InsectType.CICADA)
+            {
+                _answerCount++;
+            }
+        }
+        else if(value == 4)
+        {
+            if(_curInsect == InsectType.DRAGONFLY)
+            {
+                _answerCount++;
+            }
+        }
+
         _gameCount--;
     }
+
 }
