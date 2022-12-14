@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class ResultPanel : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _panels = null;
+    [SerializeField] private AudioSource _sound = null;
 
     private bool _isEnd = false;
     private float _timer = 0.0f;
@@ -25,13 +26,13 @@ public class ResultPanel : MonoBehaviour
             if (_timer >= 3)
                 RestartGame();
         }
-
-        
     }
 
     public void OpenResult(int result)
     {
         _isEnd = true;
+
+        //_sound.Play();
 
         switch (result)
         {

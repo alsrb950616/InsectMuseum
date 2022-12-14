@@ -7,7 +7,7 @@ public class ProgressBar : MonoBehaviour
 {
     [SerializeField] private ShootingMode _shootingMode = null;
     [SerializeField] private int _index = 0;
-    [SerializeField] private Image _progressBar = null;
+    [SerializeField] private Slider _slider = null;
 
     // Update is called once per frame
     void Update()
@@ -15,10 +15,10 @@ public class ProgressBar : MonoBehaviour
         switch (_index)
         {
             case 1: // Timer
-                _progressBar.fillAmount = _shootingMode.GetLeftLimitTime();
+                _slider.value = _shootingMode.GetLeftLimitTime();
                 break;
             case 2: // LeftGermNum
-                _progressBar.fillAmount = _shootingMode.GetDeathcunt();
+                _slider.value = _shootingMode.GetDeathcunt();
                 break;
             default:
                 break;

@@ -10,6 +10,9 @@ public class ShootingMode : MonoBehaviour
     [SerializeField] private GameObject _resultPanelObj = null;
     [SerializeField] private ResultPanel _resultPanel = null;
 
+    [SerializeField] private AudioSource _clickSound = null;
+    [SerializeField] private AudioSource _playBGM = null;
+
     private bool IsStart = false;
 
     private float MaxLimittime = 60.0f;
@@ -72,6 +75,7 @@ public class ShootingMode : MonoBehaviour
 
     public int GetResultNum() // °á°úÃ¢ ¿ÀÇÂ
     {
+        _playBGM.Pause();
         int result = 0;
         Debug.Log("Deathcount : " + Deathcount + ", Criterianum : " + Criterianum);
         if (Deathcount != 0)
@@ -89,9 +93,15 @@ public class ShootingMode : MonoBehaviour
 
     public void OnButtonEvent()
     {
+        Debug.Log("CurrentPhase : " + CurrentPhase);
+         _clickSound.Play();
+
         _loadpanels[CurrentPhase].SetActive(false);
 
         CurrentPhase++;
+
+        if (CurrentPhase == 2)
+            _playBGM.Play();
 
         _loadpanels[CurrentPhase].SetActive(true);
     }
