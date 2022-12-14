@@ -6,18 +6,17 @@ public class ShootingMode : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _loadpanels = null;
     [SerializeField] private GameObject _game = null;
-    [SerializeField] private List<GameObject> _spawners = null;
+    [SerializeField] private List<GameObject> Germs = null;
     [SerializeField] private GameObject _resultPanelObj = null;
     [SerializeField] private ResultPanel _resultPanel = null;
 
     private bool IsStart = false;
 
-    private float MaxLimittime = 30.0f;
+    private float MaxLimittime = 60.0f;
     private float Limittime = 0;
-    private float Deathcount = 0.0f;
     private float Maxcunt = 9.0f;
-
-    private int Criterianum = 0; // 결과를 위한 기준 번호
+    private float Deathcount = 0.0f;
+    private float Criterianum = 0; // 결과를 위한 기준 번호
     private int CurrentPhase = 0;
 
 
@@ -25,13 +24,14 @@ public class ShootingMode : MonoBehaviour
     {
         foreach (var go in _loadpanels)
             go.SetActive(false);
-        foreach(var go in _spawners)
-            go.SetActive(false);
+        //foreach(var go in Germs)
+        //    go.SetActive(false);
         _resultPanelObj.SetActive(false);
         _game.SetActive(false);
 
-        Limittime = 30.0f; // 제한시간 1분
-        Criterianum = (_spawners.Count / 3);
+        Limittime = 60.0f; // 제한시간 1분
+        Debug.Log("Germs.Count :" + Germs.Count);
+        Criterianum = (Germs.Count / 3);
         CurrentPhase = 0;
     }
 
@@ -44,7 +44,7 @@ public class ShootingMode : MonoBehaviour
     {
         if (IsStart) // 게임 화면이 활성화 되면 게임 시작
         {
-            Debug.Log("Game Start");
+            //Debug.Log("Game Start");
             StartTimer();
 
             if (Limittime > 0) // 시간이 남아있을 때
@@ -75,7 +75,7 @@ public class ShootingMode : MonoBehaviour
         int result = 0;
         Debug.Log("Deathcount : " + Deathcount + ", Criterianum : " + Criterianum);
         if (Deathcount != 0)
-            result = ((int)Deathcount / Criterianum);
+            result = (int)(Deathcount / Criterianum);
         Debug.Log("result : " + result);
         return result;
     }
@@ -108,6 +108,8 @@ public class ShootingMode : MonoBehaviour
 
     public void PlusDeathcunt()
     {
+        Debug.Log("Before Deathcount :" + Deathcount);
         Deathcount++;
+        Debug.Log("After Deathcount :" + Deathcount);
     }
 }

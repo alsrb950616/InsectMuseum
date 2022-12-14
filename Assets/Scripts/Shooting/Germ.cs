@@ -9,8 +9,10 @@ public class Germ : MonoBehaviour
     [SerializeField] private List<GameObject> _germs = null;
     [SerializeField] private List<GameObject> _vacsines = null;
 
-    private int HP = 0;
-
+    private int _hp = 0;
+    private int _scaleNum = 0;
+    private bool _isDead = false;
+    private float _deathTime = 0;
 
     private void Awake()
     {
@@ -22,29 +24,67 @@ public class Germ : MonoBehaviour
     }
     void Start()
     {
-        _germs[HP].SetActive(true);
+        _germs[_hp].SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (_isDead)
+        { 
+            _deathTime += Time.deltaTime;
+
+            if (_deathTime >= 1)
+                Die();
+        }
+    }
+
+    private void OnEnable()
+    {
+        _scaleNum = Random.Range(1, 4);
+
+        Debug.Log("_scaleNum : " + _scaleNum);
+
+        switch (_scaleNum)
+        {
+            case 1: // 난이도 상 - 크기 좀 작아짐
+                gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0);
+                break;
+            case 2: // 난이도 하 - 크기 좀 커짐
+                gameObject.transform.localScale = new Vector3(1.3f, 1.3f, 0);
+                break;
+            default: // 난이도 중
+                break;
+        }
     }
 
     public void OnDamage()
     {
         Debug.Log("Germ OnDam");
+        Debug.Log("before HP : " + _hp);
+        _germs[_hp].SetActive(false);
+        _vacsines[_hp].SetActive(true);
 
-        _germs[HP].SetActive(false);
-        _vacsines[HP].SetActive(true);
-        HP++;
 
-        if (HP>=3)
+        if (_hp>=2)
         {
             _shootingMode.PlusDeathcunt();
 
-            Die();
+            _isDead = true;
         }
+        else
+        {
+        _hp++;
+        _germs[_hp].SetActive(true);
+        }
+        Debug.Log("After HP : " + _hp);
 
-        _germs[HP].SetActive(true); // 3은 없으니까
     }
 
     void Die()
     {
-        Destroy(this.gameObject);
+        Debug.Log("Die");
+        foreach (var go in _germs)
+            Destroy(go);
     }
+
 }
