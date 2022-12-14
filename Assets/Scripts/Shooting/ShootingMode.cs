@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ShootingMode : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _loadpanels = null;
     [SerializeField] private GameObject _game = null;
     [SerializeField] private List<GameObject> _spawners = null;
-    [SerializeField] private List<GameObject> _resultPanels = null;
+    [SerializeField] private GameObject _resultPanelObj = null;
+    [SerializeField] private ResultPanel _resultPanel = null;
 
     private bool IsStart = false;
 
-    private float MaxLimittime = 0;
+    private float MaxLimittime = 30.0f;
     private float Limittime = 0;
     private float Deathcount = 0.0f;
     private float Maxcunt = 9.0f;
@@ -27,12 +27,10 @@ public class ShootingMode : MonoBehaviour
             go.SetActive(false);
         foreach(var go in _spawners)
             go.SetActive(false);
-        foreach (var go in _resultPanels)
-            go.SetActive(false);
+        _resultPanelObj.SetActive(false);
         _game.SetActive(false);
 
-        Limittime = 60.0f; // 제한시간 1분
-        MaxLimittime = 60.0f;
+        Limittime = 30.0f; // 제한시간 1분
         Criterianum = (_spawners.Count / 3);
         CurrentPhase = 0;
     }
@@ -46,20 +44,23 @@ public class ShootingMode : MonoBehaviour
     {
         if (IsStart) // 게임 화면이 활성화 되면 게임 시작
         {
+            Debug.Log("Game Start");
             StartTimer();
-
-            foreach (var go in _spawners)
-                go.SetActive(true); // 스폰하기
 
             if (Limittime > 0) // 시간이 남아있을 때
             {
                 if (Deathcount != Maxcunt) return; // 세균을 다 잡기전에 끝나지 않을테니까
-
-                OpenResult();
+                Debug.Log("Game Over1");
+                _game.SetActive(false);
+                _resultPanelObj.SetActive(true);
+                _resultPanel.OpenResult(GetResultNum());
             }
             else // 시간 경과 시
             {
-                OpenResult();
+                Debug.Log("Game Over2");
+                _game.SetActive(false);
+                _resultPanelObj.SetActive(true);
+                _resultPanel.OpenResult(GetResultNum());
             }
         }
     }
@@ -69,36 +70,27 @@ public class ShootingMode : MonoBehaviour
         Limittime -= Time.deltaTime;
     }
 
-    void OpenResult() // 결과창 오픈
+    public int GetResultNum() // 결과창 오픈
     {
-        int result = ((int)Deathcount / Criterianum);
-
-        switch (result)
-        {
-            case 0:
-                _resultPanels[result].SetActive(true);
-                break;
-            case 1:
-                _resultPanels[result].SetActive(true);
-                break;
-            case 2:
-                _resultPanels[result].SetActive(true);
-                break;
-            case 3:
-                _resultPanels[result].SetActive(true);
-                break;
-            default:
-                break;
-        }
+        int result = 0;
+        Debug.Log("Deathcount : " + Deathcount + ", Criterianum : " + Criterianum);
+        if (Deathcount != 0)
+            result = ((int)Deathcount / Criterianum);
+        Debug.Log("result : " + result);
+        return result;
     }
 
-    void onAnimationEnvent()
+    public void onAnimationEnvent()
     {
-
+        IsStart = true;
+        _loadpanels[CurrentPhase].SetActive(false);
+        _game.SetActive(true);
     }
 
-    void OnButtonEvent()
+    public void OnButtonEvent()
     {
+        _loadpanels[CurrentPhase].SetActive(false);
+
         CurrentPhase++;
 
         _loadpanels[CurrentPhase].SetActive(true);
@@ -112,5 +104,10 @@ public class ShootingMode : MonoBehaviour
     public float GetDeathcunt()
     {
         return (Maxcunt - Deathcount) / Maxcunt;
+    }
+
+    public void PlusDeathcunt()
+    {
+        Deathcount++;
     }
 }
