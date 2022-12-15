@@ -13,6 +13,10 @@ public class PlayerBoxScript : MonoBehaviour
     [SerializeField] private int _playerIndex = 0;
 
     [SerializeField] private int _score = 0;
+
+    [SerializeField] private AudioSource _audio = null;
+    [SerializeField] private AudioClip _catch = null;
+
     public void Setup()
     {
 
@@ -45,6 +49,7 @@ public class PlayerBoxScript : MonoBehaviour
 
     public void SetScore(int value)
     {
+        _audio.PlayOneShot(_catch);
         _score += value;
     }
 

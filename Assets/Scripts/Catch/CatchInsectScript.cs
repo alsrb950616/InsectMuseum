@@ -13,6 +13,7 @@ public class CatchInsectScript : MonoBehaviour
     [SerializeField] private CatcherScript _catcher = null;
     [SerializeField] private int _score = 100;
     [SerializeField] private InsectSpawner insectSpawner = null;
+    [SerializeField] private GameObject _catchEffect = null;
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +84,7 @@ public class CatchInsectScript : MonoBehaviour
         _catcher = catcher;
 
         this.transform.parent = _catcher.transform;
+        _catchEffect.SetActive(true);
     }
 
     public int GetInsectScore()

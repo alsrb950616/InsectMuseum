@@ -6,7 +6,8 @@ public class PlayPanelScript : MonoBehaviour
 {
     [SerializeField] private List<PlayerBoxScript> _players = null;
     [SerializeField] private CatchMainCanvasScript _main = null;
-
+    [SerializeField] private AudioSource _audio = null;
+    [SerializeField] private AudioClip _result = null;
 
     public void WaitGame()
     {
@@ -48,7 +49,7 @@ public class PlayPanelScript : MonoBehaviour
             }
 
         }
-
+        _audio.PlayOneShot(_result);
         StartTimer();
     }
 
