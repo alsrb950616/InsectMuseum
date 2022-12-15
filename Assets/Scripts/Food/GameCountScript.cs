@@ -20,6 +20,13 @@ public class GameCountScript : MonoBehaviour
         {
             Destroy(obj.gameObject);
         }
+
+        Invoke("OnTimeCount", 120);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke("OnTimeCount");
     }
 
     void Update()
@@ -42,5 +49,11 @@ public class GameCountScript : MonoBehaviour
 
 
         }
+    }
+
+    private void OnTimeCount()
+    {
+        _isRun = false;
+        _main.ButtonActivate(3);
     }
 }

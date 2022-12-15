@@ -14,7 +14,9 @@ public class FoobMainCanvasScript : MonoBehaviour
         HONEYBEE,
     }
 
-
+    [SerializeField] private AudioSource _audio = null;
+    [SerializeField] private AudioClip _successClip = null;
+    [SerializeField] private AudioClip _failedClip = null;
     [SerializeField] private List<GameObject> _panelList = null;
     [SerializeField] private InsectType _curInsect = InsectType.NONE;
     [SerializeField] private int _gameCount = 10;
@@ -107,27 +109,50 @@ public class FoobMainCanvasScript : MonoBehaviour
             if(_curInsect == InsectType.BUTTERFLY || _curInsect == InsectType.HONEYBEE)
             {
                 _answerCount++;
+                _audio.PlayOneShot(_successClip);
             }
+            else
+            {
+                _audio.PlayOneShot(_failedClip);
+            }
+
         }
         else if(value == 2)
         {
             if(_curInsect == InsectType.STAGBEETLE)
             {
                 _answerCount++;
+                _audio.PlayOneShot(_successClip);
             }
+            else
+            {
+                _audio.PlayOneShot(_failedClip);
+            }
+
         }
         else if(value == 3)
         {
             if(_curInsect == InsectType.CICADA)
             {
                 _answerCount++;
+                _audio.PlayOneShot(_successClip);
             }
+            else
+            {
+                _audio.PlayOneShot(_failedClip);
+            }
+
         }
         else if(value == 4)
         {
             if(_curInsect == InsectType.DRAGONFLY)
             {
                 _answerCount++;
+                _audio.PlayOneShot(_successClip);
+            }
+            else
+            {
+                _audio.PlayOneShot(_failedClip);
             }
         }
 

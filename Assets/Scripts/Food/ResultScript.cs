@@ -30,5 +30,17 @@ public class ResultScript : MonoBehaviour
         {
             Destroy(obj.gameObject);
         }
+
+        Invoke("TimeCount", 60);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke("TimeCount");
+    }
+
+    private void TimeCount()
+    {
+        _main.ResetDada();
     }
 }
