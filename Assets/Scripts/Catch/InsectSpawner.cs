@@ -44,7 +44,7 @@ public class InsectSpawner : MonoBehaviour
         float randomPosY = Random.Range(-1 * ( _collision.size.y / 2), _collision.size.y / 2);
 
         CatchInsectScript insect = Instantiate(_prefabs,  this.transform).GetComponent<CatchInsectScript>();
-        insect.Setup(_collision);
+        insect.Setup(_collision, this);
 
         _spawnCount++;
     }
@@ -52,5 +52,10 @@ public class InsectSpawner : MonoBehaviour
     public BoxCollider2D GetCollider()
     {
         return _collision;
+    }
+
+    public void Despawn()
+    {
+        _spawnCount--;
     }
 }
