@@ -14,6 +14,7 @@ public class CatchInsectScript : MonoBehaviour
     [SerializeField] private int _score = 100;
     [SerializeField] private InsectSpawner insectSpawner = null;
     [SerializeField] private GameObject _catchEffect = null;
+    private GameObject _insect = null;
 
     // Start is called before the first frame update
     void Start()
@@ -49,12 +50,21 @@ public class CatchInsectScript : MonoBehaviour
 
             Vector2 movespeed = dir.normalized * 15.0f * Time.deltaTime;
 
-            //Vector2 lerpDir = new Vector2(90,dir.y);
 
-            //Vector2 rot = Vector2.Lerp(lerpDir, this.GetComponent<RectTransform>().forward, Time.deltaTime);
-            //this.GetComponent<RectTransform>().forward = new Vector3(rot.y, 90, 0);
-
+            this.GetComponent<RectTransform>().forward = new Vector3(dir.x, dir.y, 0);
             this.GetComponent<RectTransform>().anchoredPosition += movespeed;
+
+            float value = 1;
+            if (this.GetComponent<RectTransform>().rotation.eulerAngles.y >=269)
+            {
+                value = 1;
+            }
+            else
+            {
+                value = -1;
+            }
+
+            _insect.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90 * value));
 
         }
 
@@ -75,7 +85,7 @@ public class CatchInsectScript : MonoBehaviour
 
         int rand = Random.Range(0, _meshs.Count);
 
-        Instantiate(_meshs[rand], this.gameObject.transform);
+        _insect = Instantiate(_meshs[rand], this.gameObject.transform);
 
     }
 
