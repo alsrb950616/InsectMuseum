@@ -8,6 +8,7 @@ public class Germ : MonoBehaviour
     [SerializeField] private ShootingMode _shootingMode = null;
     [SerializeField] private List<GameObject> _germs = null;
     [SerializeField] private List<GameObject> _vacsines = null;
+    [SerializeField] private GameObject _dieMotion = null;
 
     private int _hp = 0;
     private int _scaleNum = 0;
@@ -30,10 +31,11 @@ public class Germ : MonoBehaviour
     private void Update()
     {
         if (_isDead)
-        { 
+        {
+            Instantiate(_dieMotion, transform.position, Quaternion.identity); // 이펙트 생성
             _deathTime += Time.deltaTime;
 
-            if (_deathTime >= 1)
+            if (_deathTime >= 1.5) // 세번째 백신을 보여주고 이펙트 재생되는 시간
                 Die();
         }
     }
@@ -83,8 +85,9 @@ public class Germ : MonoBehaviour
     void Die()
     {
         Debug.Log("Die");
-        foreach (var go in _germs)
-            Destroy(go);
+        //foreach (var go in _germs)
+        //    Destroy(go);
+        Destroy(this.gameObject); // 자신을 가지고 있는 오브젝트 파괴
     }
 
 }
