@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FoobMainCanvasScript : MonoBehaviour
 {
-    private enum InsectType
+    public enum InsectType
     { 
         NONE,
         BUTTERFLY,
@@ -67,6 +67,11 @@ public class FoobMainCanvasScript : MonoBehaviour
     public void SetInsectType(int index)
     {
         _curInsect = (InsectType)index;
+    }
+
+    public InsectType GetInsectType()
+    {
+        return _curInsect;
     }
 
     public void CheckEqualAnswer(int index)

@@ -34,6 +34,25 @@ public class InsectFoodScript : MonoBehaviour
       
         Image img = this.gameObject.GetComponent<Image>();
         img.sprite = _foodImg[_index];
+
+        switch(_main.GetInsectType())
+        {
+            case FoobMainCanvasScript.InsectType.BUTTERFLY:
+                _speed = 25;
+                break;
+            case FoobMainCanvasScript.InsectType.CICADA:
+                _speed = 35;
+                break;
+            case FoobMainCanvasScript.InsectType.DRAGONFLY:
+                _speed = 15;
+                break;
+            case FoobMainCanvasScript.InsectType.HONEYBEE:
+                _speed = 25;
+                break;
+            case FoobMainCanvasScript.InsectType.STAGBEETLE:
+                _speed = 15;
+                break;
+        }
      //   this.transform.position = Vector3.zero;
     }
 
