@@ -11,7 +11,7 @@ public class CatchInsectScript : MonoBehaviour
 
     [SerializeField] private List<GameObject> _meshs = null;
     [SerializeField] private CatcherScript _catcher = null;
-    [SerializeField] private int _score = 100;
+    [SerializeField] private int _score = 1;
     [SerializeField] private InsectSpawner insectSpawner = null;
     [SerializeField] private GameObject _catchEffect = null;
     private GameObject _insect = null;

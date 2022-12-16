@@ -14,7 +14,7 @@ public class CatchResultScript : MonoBehaviour
     [SerializeField] private List<Sprite> _resultImg = null;
     private void OnEnable()
     {
-        _scoreText.text = "점수 : " + _player.GetScore().ToString() + " 점";
+        _scoreText.text = "점수 : " + _player.GetScore().ToString() + " 마리";
     }
 
     private void OnDisable()
