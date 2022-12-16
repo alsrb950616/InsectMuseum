@@ -14,7 +14,7 @@ public class Germ : MonoBehaviour
     private int _scaleNum = 0;
     private bool _isDead = false;
     private float _deathTime = 0;
-
+    private GameObject _dieEffect = null;
     private void Awake()
     {
         foreach (var go in _germs)
@@ -25,6 +25,26 @@ public class Germ : MonoBehaviour
     }
     void Start()
     {
+        _scaleNum = Random.Range(0, 3);
+
+        Debug.Log("_scaleNum : " + _scaleNum);
+
+        switch (_scaleNum)
+        {
+            case 1: // 난이도 상 - 크기 좀 작아짐
+                gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0);
+                _hp = 2;
+                break;
+            case 2: // 난이도 하 - 크기 좀 커짐
+                gameObject.transform.localScale = new Vector3(1.3f, 1.3f, 0);
+                _hp = 0;
+                break;
+            default: // 난이도 중
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
+                _hp = 1;
+                break;
+        }
+
         _germs[_hp].SetActive(true);
     }
 
@@ -32,7 +52,13 @@ public class Germ : MonoBehaviour
     {
         if (_isDead)
         {
-            Instantiate(_dieMotion, transform.position, Quaternion.identity); // 이펙트 생성
+            if(_dieMotion != null)
+            {
+                if(_dieEffect == null)
+                {
+                    _dieEffect = Instantiate(_dieMotion, transform.position, Quaternion.identity); // 이펙트 생성
+                }
+            }
             _deathTime += Time.deltaTime;
 
             if (_deathTime >= 1.5) // 세번째 백신을 보여주고 이펙트 재생되는 시간
@@ -42,28 +68,38 @@ public class Germ : MonoBehaviour
 
     private void OnEnable()
     {
-        _scaleNum = Random.Range(1, 4);
+        //_scaleNum = Random.Range(0, 3);
 
-        Debug.Log("_scaleNum : " + _scaleNum);
+        //Debug.Log("_scaleNum : " + _scaleNum);
 
-        switch (_scaleNum)
-        {
-            case 1: // 난이도 상 - 크기 좀 작아짐
-                gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0);
-                break;
-            case 2: // 난이도 하 - 크기 좀 커짐
-                gameObject.transform.localScale = new Vector3(1.3f, 1.3f, 0);
-                break;
-            default: // 난이도 중
-                break;
-        }
+        //switch (_scaleNum)
+        //{
+        //    case 1: // 난이도 상 - 크기 좀 작아짐
+        //        gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0);
+        //        _hp = 2;
+        //        break;
+        //    case 2: // 난이도 하 - 크기 좀 커짐
+        //        gameObject.transform.localScale = new Vector3(1.3f, 1.3f, 0);
+        //        _hp = 0;
+        //        break;
+        //    default: // 난이도 중
+        //        _hp = 1;
+        //        break;
+        //}
+
+        //_germs[_hp].SetActive(true);
+
     }
 
     public void OnDamage()
     {
         Debug.Log("Germ OnDam");
         Debug.Log("before HP : " + _hp);
-        _germs[_hp].SetActive(false);
+
+        foreach(var obj in _germs)
+        {
+            obj.SetActive(false);
+        }
         _vacsines[_hp].SetActive(true);
 
 
@@ -75,8 +111,8 @@ public class Germ : MonoBehaviour
         }
         else
         {
-        _hp++;
-        _germs[_hp].SetActive(true);
+           _hp++;
+         _germs[_hp].SetActive(true);
         }
         Debug.Log("After HP : " + _hp);
 
