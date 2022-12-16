@@ -8,6 +8,7 @@ TagManager:
   - Ui
   - Germ
   - TouchUi
+  - TouchSystem
   layers:
   - Default
   - TransparentFX
